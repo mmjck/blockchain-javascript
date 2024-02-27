@@ -7,17 +7,29 @@ const ec = new EC('secp256k1');
 const myKey = ec.keyFromPrivate('c0c31dd26fe8570e4074c8f701a19db7beb21e6f535719a24852264b04709c93')
 const myWalletAddress = myKey.getPublic('hex')
 
-let savjeeCoin = new Blockchain()
+const savjeeCoin = new Blockchain();
 
-const tx1 = new Transaction(myWalletAddress, "public key goes here", 10)
-tx1.signTransaction(myKey)
-
+savjeeCoin.miningPendingTransactions(myWalletAddress)
+const tx1 = new Transaction(myWalletAddress, "address2", 100)
+tx1.sign(myKey)
 savjeeCoin.addTransaction(tx1)
 
-console.log("Starting the miner ...")
+
 savjeeCoin.miningPendingTransactions(myWalletAddress)
 
-console.log(savjeeCoin.getBalanceOfAddress("xdieck-address"))
+
+const tx2 = new Transaction(myWalletAddress, "address1", 50)
+tx2.sign(myKey)
+savjeeCoin.addTransaction(tx2)
 
 
-console.log("Is chain valid? ", savjeeCoin.isChainValid())
+savjeeCoin.miningPendingTransactions(myWalletAddress)
+
+console.log();
+console.log(
+  `Balance of my wallet is ${savjeeCoin.getBalanceOfAddress(myWalletAddress)}`
+);
+
+// Check if the chain is valid
+console.log();
+console.log('Blockchain valid?', savjeeCoin.isChainValid() ? 'Yes' : 'No');
