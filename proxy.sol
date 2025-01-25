@@ -62,3 +62,17 @@ contract ProxyTransparent {
     receive() external payable { }
 
 }
+
+
+contract LogicContractV2 {
+    uint256 private _value;
+
+
+    function setValue(uint256 newValue) public {
+        _value = newValue * 2;
+    }
+
+    function getValue() public view returns (uint256){
+        return _value;
+    }
+}
